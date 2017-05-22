@@ -11,10 +11,20 @@ import java.io.Serializable;
  *
  * @author stag
  */
-public class Utilisateur implements Serializable{
+public class Utilisateur implements Serializable {
+
+    private Integer id;
     private String email;
     private String motDePasse;
     private String nom;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getEmail() {
         return email;
@@ -39,6 +49,4 @@ public class Utilisateur implements Serializable{
     public void setNom(String nom) {
         this.nom = nom;
     }
-    
-    
 }
