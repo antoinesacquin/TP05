@@ -47,6 +47,7 @@ public final class ConnexionForm {
         } catch (Exception e) {
             setErreur(CHAMP_EMAIL, e.getMessage());
         }
+        utilisateur.setEmail(email);
        
         /* Validation du champ mot de passe. */
         try {

@@ -64,7 +64,6 @@ public class InscriptionForm {
             validationMotsDePasse(motDePasse, confirmation);
         } catch (Exception e) {
             setErreur(CHAMP_PASS, e.getMessage());
-            //setErreur(CHAMP_CONF, null);
         }
         utilisateur.setPassword(motDePasse);
 
@@ -80,7 +79,7 @@ public class InscriptionForm {
         if (!erreurs.isEmpty() || userExists) {
             resultat = MESSAGE_NOT_OK;
         } else {
-            utilisateurdao.create(utilisateur);
+            utilisateur=utilisateurdao.create(utilisateur);
             resultat = MESSAGE_OK;
         }
 
