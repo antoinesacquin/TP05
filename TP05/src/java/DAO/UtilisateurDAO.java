@@ -30,7 +30,7 @@ public class UtilisateurDAO {
             String req = "SELECT * FROM " + TABLE + " WHERE id=?";
 
             PreparedStatement pstmt = this.connection.prepareStatement(req);
-            pstmt.setLong(1, id);
+            pstmt.setInt(1, id);
             //System.out.println("request:" + pstmt);
 
             ResultSet result = pstmt.executeQuery();
@@ -112,4 +112,26 @@ public class UtilisateurDAO {
         }
     }
 
+    public boolean exist(Utilisateur user) {
+        
+        boolean res = false;
+        try {
+            String req = "SELECT * FROM " + TABLE + " WHERE email=?";
+
+            PreparedStatement pstmt = this.connection.prepareStatement(req);
+            pstmt.setString(1, user.getEmail());
+            //System.out.println("request:" + pstmt);
+
+            ResultSet result = pstmt.executeQuery();
+
+            if (result.first()) {
+                res = true;
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(UtilisateurDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return res;
+
+    }
 }

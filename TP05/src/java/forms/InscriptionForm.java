@@ -5,6 +5,7 @@
  */
 package forms;
 
+import DAO.UtilisateurDAO;
 import beans.Utilisateur;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +26,7 @@ public class InscriptionForm {
     private static final Integer TAILLE_NOM = 2;
 
     private static final String MESSAGE_OK = "Succès de l'inscription.";
+    private static final String MESSAGE_USER_EXISTS = "Utilisateur déjà inscrit";
     private static final String MESSAGE_NOT_OK = "Échec de l'inscription.";
 
     private String resultat;
@@ -45,6 +47,7 @@ public class InscriptionForm {
         String nom = getValeurChamp(request, CHAMP_NOM);
 
         Utilisateur utilisateur = new Utilisateur();
+        UtilisateurDAO utilisateurdao = new UtilisateurDAO();
 
         try {
             validationEmail(email);
@@ -60,7 +63,6 @@ public class InscriptionForm {
             //setErreur(CHAMP_CONF, null);
         }
         utilisateur.setPassword(motDePasse);
-        
 
         try {
             validationNom(nom);
@@ -69,11 +71,15 @@ public class InscriptionForm {
         }
         utilisateur.setNom(nom);
 
-        if (erreurs.isEmpty()) {
-            resultat = MESSAGE_OK;
+        if (!erreurs.isEmpty()) {
+            resultat = MESSAGE_NOT_OK;           
+        } else if (utilisateurdao.exist(utilisateur)) {
+            resultat = MESSAGE_USER_EXISTS;
         } else {
-            resultat = MESSAGE_NOT_OK;
+            utilisateurdao.create(utilisateur);
+            resultat = MESSAGE_OK;
         }
+
 
         return utilisateur;
     }
