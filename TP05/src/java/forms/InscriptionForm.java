@@ -64,7 +64,6 @@ public class InscriptionForm {
             validationMotsDePasse(motDePasse, confirmation);
         } catch (Exception e) {
             setErreur(CHAMP_PASS, e.getMessage());
-            //setErreur(CHAMP_CONF, null);
         }
         utilisateur.setPassword(motDePasse);
 
