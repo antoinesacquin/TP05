@@ -71,6 +71,7 @@ public class InscriptionForm {
         }
         utilisateur.setNom(nom);
 
+        
         if (!erreurs.isEmpty()) {
             resultat = MESSAGE_NOT_OK;           
         } else if (utilisateurdao.exist(utilisateur)) {
