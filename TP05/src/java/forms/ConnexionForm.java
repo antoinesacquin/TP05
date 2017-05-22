@@ -5,6 +5,7 @@
  */
 package forms;
 
+import DAO.UtilisateurDAO;
 import beans.Utilisateur;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +21,7 @@ public final class ConnexionForm {
     private static final String CHAMP_PASS = "motdepasse";
     private String resultat;
     private Map<String, String> erreurs = new HashMap<>();
+    private Boolean validiteConnection=false;
 
     public String getResultat() {
         return resultat;
@@ -29,28 +31,34 @@ public final class ConnexionForm {
         return erreurs;
     }
 
+    public Boolean getValiditeConnection() {
+        return validiteConnection;
+    }
+
     public Utilisateur connecterUtilisateur(HttpServletRequest request) {
         /* Récupération des champs du formulaire */
         String email = getValeurChamp(request, CHAMP_EMAIL);
         String motDePasse = getValeurChamp(request, CHAMP_PASS);
         Utilisateur utilisateur = new Utilisateur();
+        UtilisateurDAO utilisateurDao= new UtilisateurDAO();
         /* Validation du champ email. */
         try {
             validationEmail(email);
         } catch (Exception e) {
             setErreur(CHAMP_EMAIL, e.getMessage());
         }
-        utilisateur.setEmail(email);
+       
         /* Validation du champ mot de passe. */
         try {
-            validationMotDePasse(motDePasse);
+           validiteConnection=validationMotDePasse(email,motDePasse);
 
         } catch (Exception e) {
             setErreur(CHAMP_PASS, e.getMessage());
         }
-        utilisateur.setPassword(motDePasse);
+        
         /* Initialisation du résultat global de la validation. */
-        if (erreurs.isEmpty()) {
+        if (erreurs.isEmpty() && validiteConnection) {
+            utilisateur=utilisateurDao.find(email);
             resultat = "Succès de la connexion.";
         } else {
             resultat = "Échec de la connexion.";
@@ -62,25 +70,34 @@ public final class ConnexionForm {
      * Valide l'adresse email saisie.
      */
     private void validationEmail(String email) throws Exception {
+        
+        UtilisateurDAO utilisateurDao= new UtilisateurDAO();
+        
         if (email == null) {
             throw new Exception("Merci de saisir une adresse mail.");
-        } else if (!email.matches("([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)"
-        )) {
-            throw new Exception("Merci de saisir une adresse mail valide.");
+        } else if (utilisateurDao.find(email)==null) {
+            throw new Exception("E-Mail inconnu");
         }
     }
 
     /**
      * Valide le mot de passe saisi.
      */
-    private void validationMotDePasse(String motDePasse) throws Exception {
-        if (motDePasse != null) {
-            if (motDePasse.length() < 3) {
-                throw new Exception("Le mot de passe doit contenir au moins 3 caractères.");
-            }
-        } else {
+    private Boolean validationMotDePasse(String email, String motDePasse) throws Exception {
+        
+        UtilisateurDAO utilisateurDao= new UtilisateurDAO();
+        
+        Boolean isValid=false;
+        String tablePwd= utilisateurDao.find(email).getPassword();
+        
+        if (motDePasse == null) {
             throw new Exception("Merci de saisir votre mot de passe.");
+        } else if(tablePwd.equals(motDePasse)) {
+            isValid=true;
+        }else{
+            throw new Exception("Mot de Passe invalide");
         }
+        return isValid;
     }
 
     /*

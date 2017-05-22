@@ -52,7 +52,7 @@ public class UtilisateurDAO {
     public Utilisateur find(String email) {
         Utilisateur user = null;
         try {
-            String req = "SELECT * FROM " + TABLE + " WHERE id=?";
+            String req = "SELECT * FROM " + TABLE + " WHERE email=?";
 
             PreparedStatement pstmt = this.connection.prepareStatement(req);
             pstmt.setString(1, email);
