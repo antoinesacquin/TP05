@@ -11,10 +11,22 @@ import java.io.Serializable;
  *
  * @author stag
  */
-public class Utilisateur implements Serializable{
-    private String email;
-    private String motDePasse;
+public class Utilisateur implements Serializable {
+
+    private Integer id;
     private String nom;
+    private String email;
+    private String password;
+
+    public Utilisateur() {
+    }
+
+    public Utilisateur(Integer id, String email, String password, String nom) {
+        this.id = id;
+        this.nom = nom;
+        this.email = email;
+        this.password = password;
+    }
 
     public String getEmail() {
         return email;
@@ -24,12 +36,12 @@ public class Utilisateur implements Serializable{
         this.email = email;
     }
 
-    public String getMotDePasse() {
-        return motDePasse;
+    public String getPassword() {
+        return password;
     }
 
-    public void setMotDePasse(String motDePasse) {
-        this.motDePasse = motDePasse;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getNom() {
@@ -39,6 +51,13 @@ public class Utilisateur implements Serializable{
     public void setNom(String nom) {
         this.nom = nom;
     }
-    
-    
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
 }
