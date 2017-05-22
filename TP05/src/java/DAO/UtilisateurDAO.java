@@ -46,6 +46,28 @@ public class UtilisateurDAO {
         return user;
     }
 
+    public Utilisateur exist(String email) {
+        Utilisateur user = null;
+        try {
+            String req = "SELECT * FROM " + TABLE + " WHERE email = ?";
+//            System.out.println("requête : " + req); // Debug
+            PreparedStatement pstmt = this.connection.prepareStatement(req);
+            pstmt.setString(1, email);
+            ResultSet result = pstmt.executeQuery();
+            if (result.first()) {
+                user = new Utilisateur(id,
+                        result.getString("email"),
+                        result.getString("password"),
+                        result.getString("nom")
+                );
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(UtilisateurDAO.class.getName()).log(Level.SEVERE,
+                    null, ex);
+        }
+        return user;
+    }
+
     public Utilisateur create(Utilisateur obj) {
         try {
             String req = "INSERT INTO " + TABLE + " (email, password, nom) VALUES(?, ?, ?)";
