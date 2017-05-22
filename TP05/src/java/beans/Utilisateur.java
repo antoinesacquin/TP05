@@ -15,8 +15,18 @@ public class Utilisateur implements Serializable {
 
     private Integer id;
     private String email;
-    private String motDePasse;
+    private String password;
     private String nom;
+
+    public Utilisateur() {
+    }
+
+    public Utilisateur(Integer id, String email, String password, String nom) {
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.nom = nom;
+    }
 
     public Integer getId() {
         return id;
@@ -34,12 +44,12 @@ public class Utilisateur implements Serializable {
         this.email = email;
     }
 
-    public String getMotDePasse() {
-        return motDePasse;
+    public String getPassword() {
+        return password;
     }
 
-    public void setMotDePasse(String motDePasse) {
-        this.motDePasse = motDePasse;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getNom() {
