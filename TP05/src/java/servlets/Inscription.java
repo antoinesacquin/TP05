@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import static servlets.Connexion.ATT_SESSION_USER;
 
 /**
  *
@@ -25,6 +24,7 @@ public class Inscription extends HttpServlet {
 
     /* Des constantes */
     private static final String VUE = "/WEB-INF/inscription.jsp";
+    private static final String VUE_CONNECTE = "/WEB-INF/connecte.jsp";
     private static final String ATT_FORM = "form";
     private static final String ATT_USER = "utilisateur";
     public static final String ATT_SESSION_USER = "sessionUtilisateur";
@@ -53,6 +53,9 @@ public class Inscription extends HttpServlet {
          */
         if (form.getErreurs().isEmpty() && !(form.getUserExists())) {
             session.setAttribute(ATT_SESSION_USER, utilisateur);
+            this.getServletContext()
+                .getRequestDispatcher(VUE_CONNECTE).
+                forward(request,response);
         } else {
             session.setAttribute(ATT_SESSION_USER, null);
         }
