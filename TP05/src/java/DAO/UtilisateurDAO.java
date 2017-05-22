@@ -17,114 +17,99 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author Severine Andraud <severine@prechel.fr>
+ * @author Antoine SACQUIN
  */
 public class UtilisateurDAO {
 
-    private final String TABLE = "inscrits";
-    Connection connection = Singleton.getInstance();
+    private static final String TABLE = "inscrits";
+    protected Connection connection = Singleton.getInstance();
 
     public Utilisateur find(Integer id) {
         Utilisateur user = null;
         try {
-            String req = "SELECT * FROM " + TABLE + " WHERE id = ?";
-//            System.out.println("requête : " + req); // Debug
-            PreparedStatement pstmt = this.connection.prepareStatement(req);
-            pstmt.setInt(1, id);
-            ResultSet result = pstmt.executeQuery();
-            if (result.first()) {
-                user = new Utilisateur(id,
-                        result.getString("email"),
-                        result.getString("password"),
-                        result.getString("nom")
-                );
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(UtilisateurDAO.class.getName()).log(Level.SEVERE,
-                    null, ex);
-        }
-        return user;
-    }
+            String req = "SELECT * FROM " + TABLE + " WHERE id=?";
 
-    public Utilisateur exist(String email) {
-        Utilisateur user = null;
-        try {
-            String req = "SELECT * FROM " + TABLE + " WHERE email = ?";
-//            System.out.println("requête : " + req); // Debug
             PreparedStatement pstmt = this.connection.prepareStatement(req);
-            pstmt.setString(1, email);
+            pstmt.setLong(1, id);
+            //System.out.println("request:" + pstmt);
+
             ResultSet result = pstmt.executeQuery();
             if (result.first()) {
-                user = new Utilisateur(id,
+                user = new Utilisateur(
+                        id,
                         result.getString("email"),
                         result.getString("password"),
-                        result.getString("nom")
-                );
+                        result.getString("nom"));
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(UtilisateurDAO.class.getName()).log(Level.SEVERE,
-                    null, ex);
+
+        } catch (SQLException e) {
+            Logger.getLogger(UtilisateurDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return user;
+
     }
 
     public Utilisateur create(Utilisateur obj) {
         try {
-            String req = "INSERT INTO " + TABLE + " (email, password, nom) VALUES(?, ?, ?)";
-//            System.out.println("requête : " + req); // Debug
+            String req = "INSERT INTO " + TABLE + " (email, password, nom) VALUES(?,?,?)";
+
             PreparedStatement pstmt = this.connection.prepareStatement(req, Statement.RETURN_GENERATED_KEYS);
+
             pstmt.setString(1, obj.getEmail());
             pstmt.setString(2, obj.getPassword());
             pstmt.setString(3, obj.getNom());
-// On soumet la requête et on récupère le nombre d'id créés
+            //System.out.println("request:" + pstmt);
+
             int id = pstmt.executeUpdate();
-// On pourrait s'arrêter là, mais je préfère récupérer la ligne créée
-// Ca permet de savoir ce qu'on a réellement mis dans la DB
-            ResultSet rs = pstmt.getGeneratedKeys();
-            Integer last_inserted_id;
-            if (rs.first()) { // Si on a des id créés
-                last_inserted_id = rs.getInt(1);
-// On récupère l'enregistrement créé
-                obj = this.find(last_inserted_id);
+
+            ResultSet result = pstmt.getGeneratedKeys();
+            int lastInsertedId;
+
+            if (result.first()) {
+                lastInsertedId = result.getInt(1);
+                obj = this.find(lastInsertedId);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(Utilisateur.class.getName()).log(Level.SEVERE,
-                    null, ex);
+
+        } catch (SQLException e) {
+            Logger.getLogger(UtilisateurDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return obj;
     }
 
     public Utilisateur update(Utilisateur obj) {
         try {
-            String req = "UPDATE " + TABLE + " SET email = ?, " + "password = ? "
-                    + "nom = ? WHERE id = ?";
-//
-            System.out.println("requête : " + req); // Debug
+            String req = "UPDATE " + TABLE + " SET email = ?, password =?, nom = ?  WHERE id=?";
+
             PreparedStatement pstmt = this.connection.prepareStatement(req);
+
             pstmt.setString(1, obj.getEmail());
             pstmt.setString(2, obj.getPassword());
-            pstmt.setString(3, obj.getNom());
+            pstmt.setInt(3, obj.getId());
+            //System.out.println("request:" + pstmt);
             pstmt.executeUpdate();
-// On récupère l'enregistrement modifié
+
             obj = this.find(obj.getId());
-        } catch (SQLException ex) {
-            Logger.getLogger(Utilisateur.class.getName()).log(Level.SEVERE,
-                    null, ex);
+
+        } catch (SQLException e) {
+            Logger.getLogger(UtilisateurDAO.class.getName()).log(Level.SEVERE, null, e);
         }
         return obj;
     }
 
     public void delete(Utilisateur obj) {
         try {
-            String req = "DELETE FROM " + TABLE + " WHERE id = ?";
+            String req = "DELETE FROM " + TABLE + " WHERE id=?";
 
-//            System.out.println("requête : " + req); // Debug
             PreparedStatement pstmt = this.connection.prepareStatement(req);
-            pstmt.setInt(1, obj.getId());
+
+            pstmt.setLong(1, obj.getId());
+            //System.out.println("request:" + pstmt);
+
             pstmt.executeUpdate();
-        } catch (SQLException ex) {
-            Logger.getLogger(Utilisateur.class.getName()).log(Level.SEVERE,
-                    null, ex);
+
+        } catch (SQLException e) {
+            Logger.getLogger(UtilisateurDAO.class.getName()).log(Level.SEVERE, null, e);
         }
     }
+
 }
