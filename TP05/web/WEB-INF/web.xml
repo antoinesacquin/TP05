@@ -13,7 +13,8 @@
         <jsp-property-group>
             <url-pattern>*.jsp</url-pattern>
             <include-prelude>/WEB-INF/taglibs.jsp</include-prelude>
-            <include-coda>/WEB-INF/menu.jsp</include-coda>
+            <include-prelude>/WEB-INF/headerMenu.jsp</include-prelude>
+            <include-coda>/WEB-INF/footerDeconnex.jsp</include-coda>
         </jsp-property-group>
     </jsp-config>
 </web-app>
