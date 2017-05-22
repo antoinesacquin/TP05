@@ -25,12 +25,13 @@ public class InscriptionForm {
     private static final Integer TAILLE_PWD = 3;
     private static final Integer TAILLE_NOM = 2;
 
-    private static final String MESSAGE_OK = "Succès de l'inscription.";
+    private static final String MESSAGE_OK = "Succès de l'inscription. Vous êtes maintenant connecté";
     private static final String MESSAGE_USER_EXISTS = "Utilisateur déjà inscrit";
     private static final String MESSAGE_NOT_OK = "Échec de l'inscription.";
 
     private String resultat;
     private Map<String, String> erreurs = new HashMap<String, String>();
+    private Boolean userExists=false;
 
     public String getResultat() {
         return resultat;
@@ -40,6 +41,11 @@ public class InscriptionForm {
         return erreurs;
     }
 
+    
+    public Boolean getUserExists() {
+        return userExists;
+    }
+    
     public Utilisateur inscrireUtilisateur(HttpServletRequest request) {
         String email = getValeurChamp(request, CHAMP_EMAIL);
         String motDePasse = getValeurChamp(request, CHAMP_PASS);
@@ -48,6 +54,7 @@ public class InscriptionForm {
 
         Utilisateur utilisateur = new Utilisateur();
         UtilisateurDAO utilisateurdao = new UtilisateurDAO();
+        
 
         try {
             validationEmail(email);
@@ -71,10 +78,12 @@ public class InscriptionForm {
         }
         utilisateur.setNom(nom);
 
+        userExists=utilisateurdao.exist(utilisateur);
+
         
         if (!erreurs.isEmpty()) {
             resultat = MESSAGE_NOT_OK;           
-        } else if (utilisateurdao.exist(utilisateur)) {
+        } else if (userExists) {
             resultat = MESSAGE_USER_EXISTS;
         } else {
             utilisateurdao.create(utilisateur);
@@ -139,4 +148,5 @@ contenu
             return valeur.trim();
         }
     }
+
 }

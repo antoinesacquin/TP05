@@ -13,6 +13,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import static servlets.Connexion.ATT_SESSION_USER;
 
 /**
  *
@@ -23,9 +25,9 @@ public class Inscription extends HttpServlet {
 
     /* Des constantes */
     private static final String VUE = "/WEB-INF/inscription.jsp";
-    private static final String ATT_FORM="form";
-    private static final String ATT_USER="utilisateur";
-   
+    private static final String ATT_FORM = "form";
+    private static final String ATT_USER = "utilisateur";
+    public static final String ATT_SESSION_USER = "sessionUtilisateur";
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,13 +41,25 @@ public class Inscription extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        InscriptionForm form=new InscriptionForm();
-        
-        Utilisateur utilisateur=form.inscrireUtilisateur(request);
-        
+        InscriptionForm form = new InscriptionForm();
+
+        Utilisateur utilisateur = form.inscrireUtilisateur(request);
+
+        HttpSession session = request.getSession();
+
+        /**
+         * Si aucune erreur de validation n'a eu lieu, alors ajout du bean
+         * Utilisateur à la session, sinon suppression du bean de la session.
+         */
+        if (form.getErreurs().isEmpty() && !(form.getUserExists())) {
+            session.setAttribute(ATT_SESSION_USER, utilisateur);
+        } else {
+            session.setAttribute(ATT_SESSION_USER, null);
+        }
+
         request.setAttribute(ATT_FORM, form);
         request.setAttribute(ATT_USER, utilisateur);
-        
+
         /* Transmission de la paire d'objets request/response à notre JSP */
         this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
 

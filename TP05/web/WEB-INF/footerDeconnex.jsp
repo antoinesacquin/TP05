@@ -11,9 +11,10 @@
 </head>
 <html>
     <body>
-        <form>            
-            <input type="submit" formaction="<c:out value="deconnexion"/>" value="DECONNEXION"/>
-        </form>
-
+        <c:if test="${!empty sessionScope.sessionUtilisateur}">
+                <form> 
+                    <input type="submit" formaction="<c:out value="deconnexion"/>" value="DECONNEXION"/>
+                </form>
+        </c:if>
     </body>
 </html>
