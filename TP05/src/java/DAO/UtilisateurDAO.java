@@ -19,13 +19,10 @@ import java.util.logging.Logger;
  *
  * @author Antoine SACQUIN
  */
-public class UtilisateurDAO {
+public class UtilisateurDAO extends DAO<Utilisateur>{
 
     //Nom de la table d'intéret
     private static final String TABLE = "inscrits";
-
-    //crétaion connection à la base de donnée
-    protected Connection connection = Singleton.getInstance();
 
     /**
      * Méthode permettant d'obtenir un objet utilisateur dans la base de donnée
@@ -34,6 +31,7 @@ public class UtilisateurDAO {
      * @param id numero d'identifiant de l'utilisateur
      * @return utilisateur recherché
      */
+    @Override
     public Utilisateur find(Integer id) {
         Utilisateur user = null;
         try {
@@ -66,6 +64,7 @@ public class UtilisateurDAO {
      * @param email email de l'utilisateur
      * @return utilisateur recherché
      */
+
     public Utilisateur find(String email) {
         Utilisateur user = null;
         try {
@@ -98,6 +97,7 @@ public class UtilisateurDAO {
      * @param obj Utilisateur à ajouter à la base de donnée
      * @return Utilisateur crée avec son numéro d'identifiant
      */
+    @Override
     public Utilisateur create(Utilisateur obj) {
         try {
             String req = "INSERT INTO " + TABLE + " (email, password, nom) VALUES(?,?,?)";
@@ -131,6 +131,7 @@ public class UtilisateurDAO {
      * @param obj utilisateur à mettre à jour
      * @return utilisateur mis à jour
      */
+    @Override
     public Utilisateur update(Utilisateur obj) {
         try {
             String req = "UPDATE " + TABLE + " SET email = ?, password =?, nom = ?  WHERE id=?";
@@ -156,6 +157,7 @@ public class UtilisateurDAO {
      *
      * @param obj utilisateur à éliminer
      */
+    @Override
     public void delete(Utilisateur obj) {
         try {
             String req = "DELETE FROM " + TABLE + " WHERE id=?";
