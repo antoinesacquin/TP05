@@ -79,7 +79,7 @@ public class InscriptionForm {
         if (!erreurs.isEmpty() || userExists) {
             resultat = MESSAGE_NOT_OK;
         } else {
-            utilisateurdao.create(utilisateur);
+            utilisateur=utilisateurdao.create(utilisateur);
             resultat = MESSAGE_OK;
         }
 
