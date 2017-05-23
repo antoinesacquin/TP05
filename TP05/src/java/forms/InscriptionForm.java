@@ -70,7 +70,8 @@ public class InscriptionForm {
         } catch (Exception e) {
             setErreur(CHAMP_PASS, e.getMessage());
         }
-        utilisateur.setPassword(motDePasse);
+        String encryptedPwd= EncryptionForm.getSecurePassword(motDePasse);
+        utilisateur.setPassword(encryptedPwd);
 
         try {
             validationNom(nom);

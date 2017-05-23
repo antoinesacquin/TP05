@@ -96,10 +96,12 @@ public final class ConnexionForm {
         UtilisateurDAO utilisateurDao = new UtilisateurDAO();
 
         String tablePwd = utilisateurDao.find(email).getPassword();
+        
+        String MotDePasseCrypte=EncryptionForm.getSecurePassword(motDePasse);
 
         if (motDePasse == null) {
             throw new Exception("Merci de saisir votre mot de passe.");
-        } else if (!tablePwd.equals(motDePasse)) {
+        } else if (!tablePwd.equals(MotDePasseCrypte)) {
             throw new Exception("Mot de Passe invalide");
         }
     }
