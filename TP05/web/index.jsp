@@ -14,7 +14,6 @@
     </head>
     <body class="homepage">
         
-        <div class="image"><img src="inc/avion.jpg" width="100px"></div>
         <div class="title">LDNR Voyage</div>
         <h2>Bienvenue sur notre site!</h2>
         <p>Si vous n'avez pas encore de compte utilisateur, veuillez vous inscrire</p>

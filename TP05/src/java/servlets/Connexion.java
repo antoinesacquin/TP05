@@ -30,10 +30,18 @@ public class Connexion extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        HttpSession session = request.getSession();
+        
+        if (null !=session.getAttribute(ATT_SESSION_USER)) {
+            response.sendRedirect(getServletContext().getContextPath() + LIEN_CONNECTE);
+        }else {
+            session.setAttribute(ATT_SESSION_USER, null);
+        
         /* Affichage de la page de connexion */
         this.getServletContext()
                 .getRequestDispatcher(VUE)
-                .forward(request, response);
+                .forward(request, response);}
     }
 
     public void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -49,10 +57,10 @@ public class Connexion extends HttpServlet {
         HttpSession session = request.getSession();
 
         /**
-         * Si aucune erreur de validation n'a eu lieu, alors ajout du bean
+         * Si aucune erreur de validation n'a eu lieu ou que l'on est déjà en session, alors ajout du bean
          * Utilisateur à la session, sinon suppression du bean de la session.
          */
-        if (form.getErreurs().isEmpty()) {
+        if ((form.getErreurs().isEmpty()) || (null !=session.getAttribute(ATT_SESSION_USER))) {
             session.setAttribute(ATT_SESSION_USER, utilisateur);
             response.sendRedirect(getServletContext().getContextPath() + LIEN_CONNECTE);
         } else {
