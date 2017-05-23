@@ -15,7 +15,7 @@
     <body>
         <h1>Bonjour <c:out value="${sessionScope.sessionUtilisateur.nom}"/></h1>
 
-        <p>VOUS ÊTES MAINTENANT CONNECTE!!!<br/>
+        <p>Vous etes maitenant connecté!!!<br/>
             PASSEZ UNE AGREABLE SESSION AVEC NOUS!</p>   
 
         <form method="post" action="<c:url value="connecte"/>">
