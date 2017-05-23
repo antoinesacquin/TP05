@@ -10,10 +10,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link type="text/css" rel="stylesheet" href="inc/form.css" />
-        <title>Bienvenue</title>
+        <title>LDNR voyage</title>
     </head>
-    <body>
-        <h1>Bienvenue sur notre site!</h1>
+    <body class="homepage">
+        
+        <div class="image"><img src="inc/avion.jpg" width="100px"></div>
+        <div class="title">LDNR Voyage</div>
+        <h2>Bienvenue sur notre site!</h2>
         <p>Si vous n'avez pas encore de compte utilisateur, veuillez vous inscrire</p>
         <form> 
             <p><input type="submit" formaction="<c:out value="inscription"/>" value="INSCRIPTION"/></p>
