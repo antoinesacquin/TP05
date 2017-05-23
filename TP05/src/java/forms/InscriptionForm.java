@@ -90,7 +90,7 @@ public class InscriptionForm {
     }
 
     /**
-     * Valide le formatde l'Email et vérifie s'il existe déjà dans la base de
+     * Valide le format de l'Email et vérifie s'il existe déjà dans la base de
      * donnée
      *
      * @param email email à vérifier
