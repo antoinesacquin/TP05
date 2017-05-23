@@ -14,26 +14,18 @@ import java.io.Serializable;
 public class Utilisateur implements Serializable {
 
     private Integer id;
+    private String nom;
     private String email;
     private String password;
-    private String nom;
 
     public Utilisateur() {
     }
 
     public Utilisateur(Integer id, String email, String password, String nom) {
         this.id = id;
+        this.nom = nom;
         this.email = email;
         this.password = password;
-        this.nom = nom;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getEmail() {
@@ -59,4 +51,13 @@ public class Utilisateur implements Serializable {
     public void setNom(String nom) {
         this.nom = nom;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
 }

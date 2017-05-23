@@ -25,12 +25,12 @@ public class InscriptionForm {
     private static final Integer TAILLE_PWD = 3;
     private static final Integer TAILLE_NOM = 2;
 
-    private static final String MESSAGE_OK = "Succès de l'inscription.";
-    private static final String MESSAGE_USER_EXISTS = "Utilisateur déjà inscrit";
+    private static final String MESSAGE_OK = "Succès de l'inscription. Vous êtes maintenant connecté";
     private static final String MESSAGE_NOT_OK = "Échec de l'inscription.";
 
     private String resultat;
     private Map<String, String> erreurs = new HashMap<String, String>();
+    private Boolean userExists = false;
 
     public String getResultat() {
         return resultat;
@@ -38,6 +38,10 @@ public class InscriptionForm {
 
     public Map<String, String> getErreurs() {
         return erreurs;
+    }
+
+    public Boolean getUserExists() {
+        return userExists;
     }
 
     public Utilisateur inscrireUtilisateur(HttpServletRequest request) {
@@ -60,7 +64,6 @@ public class InscriptionForm {
             validationMotsDePasse(motDePasse, confirmation);
         } catch (Exception e) {
             setErreur(CHAMP_PASS, e.getMessage());
-            //setErreur(CHAMP_CONF, null);
         }
         utilisateur.setPassword(motDePasse);
 
@@ -71,11 +74,10 @@ public class InscriptionForm {
         }
         utilisateur.setNom(nom);
 
-        
-        if (!erreurs.isEmpty()) {
-            resultat = MESSAGE_NOT_OK;           
-        } else if (utilisateurdao.exist(utilisateur)) {
-            resultat = MESSAGE_USER_EXISTS;
+        userExists = utilisateurdao.exist(utilisateur);
+
+        if (!erreurs.isEmpty() || userExists) {
+            resultat = MESSAGE_NOT_OK;
         } else {
             utilisateurdao.create(utilisateur);
             resultat = MESSAGE_OK;
@@ -86,9 +88,12 @@ public class InscriptionForm {
     }
 
     private void validationEmail(String email) throws Exception {
+        UtilisateurDAO utilisateurDao = new UtilisateurDAO();
         if (email != null && email.length() != 0) {
             if (!email.matches("([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)")) {
                 throw new Exception("Merci de saisir une adresse mail valide.");
+            } else if (utilisateurDao.find(email) != null) {
+                throw new Exception("E-Mail déjà pris!");
             }
         } else {
             throw new Exception("Merci de saisir une adresse mail.");
@@ -139,4 +144,5 @@ contenu
             return valeur.trim();
         }
     }
+
 }
