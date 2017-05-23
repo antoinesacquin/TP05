@@ -14,7 +14,7 @@ import java.sql.Connection;
  */
 public abstract class DAO<T> {
 
-    //crétaion connection à la base de donnée
+    //création connection à la base de donnée
     protected Connection connection = Singleton.getInstance();
 
     /**
