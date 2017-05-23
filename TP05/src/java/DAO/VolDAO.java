@@ -132,16 +132,48 @@ public class VolDAO extends DAO<Vol> {
 
     }
 
-
-    public Set<Long> findAllId() {
-        Set<Long> tabId = new HashSet<>();
+/**Retourne toutes les villes de départ de la table
+ * 
+ * @return 
+ */
+    public Set<String> findAllDeparts() {
+        Set<String> tabId = new HashSet<>();
         try {
-            String req = "SELECT id FROM " + TABLE;
+            String req = "SELECT depart FROM " + TABLE;
 
             Statement stmt = this.connection.createStatement();
             ResultSet result = stmt.executeQuery(req);
             while (result.next()) {
-                tabId.add(result.getLong(1));
+                tabId.add(result.getString(1));
+            }
+
+        } catch (SQLException e) {
+            Logger.getLogger(VolDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return tabId;
+    }
+    public Set<Vol> findAll(String depart) {
+        Set<Vol> tabId = new HashSet<>();
+        try {
+            String req = "SELECT * FROM " + TABLE+" WHERE depart = ?";
+
+            PreparedStatement pstmt = this.connection.prepareStatement(req);
+            pstmt.setString(1, depart);
+            
+            ResultSet result = pstmt.executeQuery(req);
+            while (result.next()) {
+               Vol vol = new Vol(
+                        result.getInt("id"),
+                        result.getString("depart"),
+                        result.getString("arrivee"),
+                        result.getInt("id_avion"),
+                        result.getInt("id_pilote"),
+                        result.getDate("jdep"),
+                        result.getTime("hdep"),
+                        result.getDate("jarr"),
+                        result.getTime("harr")
+                );
+                tabId.add(vol);
             }
 
         } catch (SQLException e) {
