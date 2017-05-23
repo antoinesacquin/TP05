@@ -19,10 +19,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Antoine SACQUIN
  */
-@WebServlet(name = "Connecte", urlPatterns = {"/connecte"})
+@WebServlet(name = "Connecte", urlPatterns = {"/pagePrincipale"})
 public class Connecte extends HttpServlet {
 
-    private static final String VUE="/WEB-INF/connecte.jsp";
+    private static final String VUE="/WEB-INF/pagePrincipale.jsp";
     private static final String ATT_VILLES="villesDepart";
     private static final String ATT_VOLS="vols";
 

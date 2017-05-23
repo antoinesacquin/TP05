@@ -26,7 +26,7 @@ public class Connexion extends HttpServlet {
     public static final String ATT_FORM = "form";
     public static final String ATT_SESSION_USER = "sessionUtilisateur";
     public static final String VUE = "/WEB-INF/connexion.jsp";
-    public static final String LIEN_CONNECTE = "/connecte";
+    public static final String LIEN_CONNECTE = "/pagePrincipale";
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
