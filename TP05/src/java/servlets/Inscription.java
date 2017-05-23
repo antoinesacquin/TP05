@@ -24,7 +24,7 @@ public class Inscription extends HttpServlet {
 
     /* Des constantes */
     private static final String VUE = "/WEB-INF/inscription.jsp";
-    private static final String VUE_CONNECTE = "/WEB-INF/connecte.jsp";
+    private static final String LIEN_CONNECTE = "/connecte";
     private static final String ATT_FORM = "form";
     private static final String ATT_USER = "utilisateur";
     public static final String ATT_SESSION_USER = "sessionUtilisateur";
@@ -56,18 +56,16 @@ public class Inscription extends HttpServlet {
          */
         if (form.getErreurs().isEmpty()) {
             session.setAttribute(ATT_SESSION_USER, utilisateur);
-            this.getServletContext()
-                .getRequestDispatcher(VUE_CONNECTE).
-                forward(request,response);
+            response.sendRedirect(getServletContext().getContextPath() + LIEN_CONNECTE);
         } else {
             session.setAttribute(ATT_SESSION_USER, null);
+
+            request.setAttribute(ATT_FORM, form);
+            request.setAttribute(ATT_USER, utilisateur);
+
+            /* Transmission de la paire d'objets request/response à notre JSP */
+            this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
         }
-
-        request.setAttribute(ATT_FORM, form);
-        request.setAttribute(ATT_USER, utilisateur);
-
-        /* Transmission de la paire d'objets request/response à notre JSP */
-        this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
 
     }
 
