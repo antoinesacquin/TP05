@@ -11,6 +11,12 @@ legend {
     font-weight: bold;
     color: #0568CD;
 }
+th, td {
+    border: 1px dotted black;
+}
+table {
+    border: 1px solid black;
+}
 /* Forms 
 ------------------------------------------------------------------------
 ---------------*/
