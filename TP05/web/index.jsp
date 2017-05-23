@@ -9,9 +9,18 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <link type="text/css" rel="stylesheet" href="inc/form.css" />
+        <title>Bienvenue</title>
     </head>
     <body>
-        <h1>Hello World!</h1>
+        <h1>Bienvenue sur notre site!</h1>
+        <p>Si vous n'avez pas encore de compte utilisateur,
+            veuillez vous inscrire</p>
+        <form> 
+            <p><input type="submit" formaction="<c:out value="inscription"/>" value="INSCRIPTION"/></p>
+
+            <p>Sinon, veuillez vous connecter</p>
+            <p><input type="submit" formaction="<c:out value="connexion"/>" value="CONNEXION"/></p>
+        </form>
     </body>
 </html>

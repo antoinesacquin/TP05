@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 @WebServlet(name = "Deconnexion", urlPatterns = {"/deconnexion"})
 public class Deconnexion extends HttpServlet {
 
-    public static final String URL_REDIRECTION = "/connexion";
+    public static final String URL_REDIRECTION = "/index.jsp";
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         /* Récupération et destruction de la sess
