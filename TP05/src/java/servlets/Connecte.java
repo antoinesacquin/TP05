@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(name = "Connecte", urlPatterns = {"/connecte"})
 public class Connecte extends HttpServlet {
 
-    private static final String VUE="/WEB-INF/connecte.jsp";
+    private static final String VUE="/WEB-INF/pagePrincipale.jsp";
     private static final String ATT_VILLES="villesDepart";
     private static final String ATT_VOLS="vols";
 
