@@ -16,6 +16,7 @@ th, td {
 }
 table {
     border: 1px solid black;
+    color: white;
 }
 /* Forms 
 ------------------------------------------------------------------------
@@ -37,11 +38,11 @@ form .requis {
 }
 
 form .erreur {
-color: #900;
+    color: #900;
 }
 
 form .succes {
-color: #1c6e25;
+    color: #1c6e25;
 }
 
 /*button de homepage*/
@@ -66,25 +67,25 @@ input[type=submit] {
 }
 
 .title{
-     -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-  border: none;
-  font: italic normal normal 50px/2 Arial Black, Gadget, sans-serif;
-  color: black;
-  text-align: center;
-  -o-text-overflow: ellipsis;
-  text-overflow: ellipsis;
-  letter-spacing: 5px;
-  word-spacing: 6px;
-  -webkit-transform: rotateX(13deg)   ;
-  transform: rotateX(13deg)   ;
-  
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    border: none;
+    font: italic normal normal 50px/2 Arial Black, Gadget, sans-serif;
+    color: black;
+    text-align: center;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    letter-spacing: 5px;
+    word-spacing: 6px;
+    -webkit-transform: rotateX(13deg)   ;
+    transform: rotateX(13deg)   ;
+
 }
 
 
 body{
-   
+
     background-image: url("plane.jpg");
     background-size: cover;
 }

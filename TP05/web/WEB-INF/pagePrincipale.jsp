@@ -19,13 +19,13 @@
         
         <h3> Veuilllez choisir votre destination </h3>
 
-        <form method="post" action="<c:url value="connecte"/>">
+        <form method="post" action="<c:url value="pagePrincipale"/>">
             <select name="depart" >
                 <c:forEach items="${requestScope.villesDepart}" var="ville">
                     <option><c:out value="${ville}"/></option>  
                 </c:forEach>
             </select>
-            <input type="submit" formaction="<c:url value="connecte"/>" value="Valider"/>
+            <input type="submit" formaction="<c:url value="pagePrincipale"/>" value="Valider"/>
         </form>
         <c:if test="${!empty param.depart}"> <table>
                 <tr>
