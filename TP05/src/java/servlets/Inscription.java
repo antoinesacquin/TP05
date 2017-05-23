@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
 /**
  *
  * @author stag
@@ -31,10 +32,17 @@ public class Inscription extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        /* Affichage de la page d'inscription */
+        
+        HttpSession session = request.getSession();
+        
+        if (null !=session.getAttribute(ATT_SESSION_USER)) {
+            response.sendRedirect(getServletContext().getContextPath() + LIEN_CONNECTE);
+        }else {
+            session.setAttribute(ATT_SESSION_USER, null);
+        
         this.getServletContext()
                 .getRequestDispatcher(VUE)
-                .forward(request, response);
+                .forward(request, response);}
     }
 
     @Override
@@ -54,7 +62,7 @@ public class Inscription extends HttpServlet {
         *
         *sinon suppression du bean de la session.
          */
-        if (form.getErreurs().isEmpty()) {
+        if ((form.getErreurs().isEmpty()) || (null !=session.getAttribute(ATT_SESSION_USER))) {
             session.setAttribute(ATT_SESSION_USER, utilisateur);
             response.sendRedirect(getServletContext().getContextPath() + LIEN_CONNECTE);
         } else {
