@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class InscriptionForm {
 
+    //Paramètres statiques de la classe
     private static final String CHAMP_EMAIL = "email";
     private static final String CHAMP_PASS = "motdepasse";
     private static final String CHAMP_CONF = "confirmation";
@@ -28,9 +29,11 @@ public class InscriptionForm {
     private static final String MESSAGE_OK = "Succès de l'inscription. Vous êtes maintenant connecté";
     private static final String MESSAGE_NOT_OK = "Échec de l'inscription.";
 
+    //message de succès/echec de la connexion
     private String resultat;
+
+    //liste des erreurs levées lors de la soumission du formulaire de connexion
     private Map<String, String> erreurs = new HashMap<String, String>();
-    private Boolean userExists = false;
 
     public String getResultat() {
         return resultat;
@@ -40,19 +43,21 @@ public class InscriptionForm {
         return erreurs;
     }
 
-    public Boolean getUserExists() {
-        return userExists;
-    }
-
     public Utilisateur inscrireUtilisateur(HttpServletRequest request) {
+
+        //récupération des paramètres de la requête en inscription
         String email = getValeurChamp(request, CHAMP_EMAIL);
         String motDePasse = getValeurChamp(request, CHAMP_PASS);
         String confirmation = getValeurChamp(request, CHAMP_CONF);
         String nom = getValeurChamp(request, CHAMP_NOM);
 
+        //instanciation d'un objet utilisateur
         Utilisateur utilisateur = new Utilisateur();
+        //instanciation d'un objet DAO pour interroger la base de donnée
         UtilisateurDAO utilisateurdao = new UtilisateurDAO();
 
+        //tests de validation des champs et hydratation du bean avec paramètres de requête
+        //pour afficher dans le formulaire malgré échec inscription
         try {
             validationEmail(email);
         } catch (Exception e) {
@@ -74,20 +79,27 @@ public class InscriptionForm {
         }
         utilisateur.setNom(nom);
 
-        userExists = utilisateurdao.exist(utilisateur);
-
-        if (!erreurs.isEmpty() || userExists) {
+        if (!erreurs.isEmpty()) {
             resultat = MESSAGE_NOT_OK;
         } else {
-            utilisateur=utilisateurdao.create(utilisateur);
+            utilisateur = utilisateurdao.create(utilisateur);
             resultat = MESSAGE_OK;
         }
 
         return utilisateur;
     }
 
+    /**
+     * Valide le formatde l'Email et vérifie s'il existe déjà dans la base de
+     * donnée
+     *
+     * @param email email à vérifier
+     * @throws Exception
+     */
     private void validationEmail(String email) throws Exception {
+
         UtilisateurDAO utilisateurDao = new UtilisateurDAO();
+
         if (email != null && email.length() != 0) {
             if (!email.matches("([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)")) {
                 throw new Exception("Merci de saisir une adresse mail valide.");
@@ -99,8 +111,11 @@ public class InscriptionForm {
         }
     }
 
-    /**
-     * Valide les mots de passe saisis.
+    /**Vérifie le format du mot de passe et la correspondance avec la confirmation
+     * 
+     * @param motDePasse
+     * @param confirmation
+     * @throws Exception 
      */
     private void validationMotsDePasse(String motDePasse, String confirmation) throws Exception {
         if (motDePasse != null && motDePasse.length() != 0 && confirmation != null && confirmation.length() != 0) {
@@ -114,8 +129,10 @@ public class InscriptionForm {
         }
     }
 
-    /**
-     * Valide le nom d'utilisateur saisi.
+    /**Vérifie le nom d'utilisateur: s'il existe ou qu'il fait la bonne taille minimum
+     * 
+     * @param nom
+     * @throws Exception 
      */
     private void validationNom(String nom) throws Exception {
         if (nom.length() != 0 && nom.length() < TAILLE_NOM) {
@@ -123,18 +140,22 @@ public class InscriptionForm {
         }
     }
 
-    /*
-* Ajoute un message correspondant au champ spécifié à la map des erreurs.
-     */
+/**Ajoute un message correspondant au champ spécifié à la map des erreurs.
+ * 
+ * @param champ
+ * @param message 
+ */
     private void setErreur(String champ, String message) {
         erreurs.put(champ, message);
     }
 
-    /*
-* Méthode utilitaire qui retourne null si un champ est vide, et son 
-contenu
-* sinon.
-     */
+/**Méthode utilitaire qui retourne null si un champ est vide, et son contenu
+ * débarassé des espaces devant et derrière
+ * 
+ * @param request
+ * @param nomChamp
+ * @return 
+ */
     private String getValeurChamp(HttpServletRequest request, String nomChamp) {
         String valeur = request.getParameter(nomChamp);
         if (valeur == null || valeur.trim().length() == 0) {

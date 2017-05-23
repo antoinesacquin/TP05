@@ -51,7 +51,7 @@ public class Inscription extends HttpServlet {
          * Si aucune erreur de validation n'a eu lieu, alors ajout du bean
          * Utilisateur à la session, sinon suppression du bean de la session.
          */
-        if (form.getErreurs().isEmpty() && !(form.getUserExists())) {
+        if (form.getErreurs().isEmpty()) {
             session.setAttribute(ATT_SESSION_USER, utilisateur);
             this.getServletContext()
                 .getRequestDispatcher(VUE_CONNECTE).
