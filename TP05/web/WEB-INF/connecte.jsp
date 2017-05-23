@@ -12,11 +12,12 @@
         <title>Bienvenue</title>
         <link type="text/css" rel="stylesheet" href="inc/form.css" />
     </head>
-    <body>
+    <body class="connect">
         <h1>Bonjour <c:out value="${sessionScope.sessionUtilisateur.nom}"/></h1>
 
-        <p>Vous etes maitenant connecté!!!<br/>
-            PASSEZ UNE AGREABLE SESSION AVEC NOUS!</p>   
+        <p>Vous êtes maintenant connecté!!!<br/></p>   
+        
+        <h3> Veuilllez choisir votre destination </h3>
 
         <form method="post" action="<c:url value="connecte"/>">
             <select name="depart" >
