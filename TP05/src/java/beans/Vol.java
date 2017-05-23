@@ -15,11 +15,11 @@ import java.sql.Time;
  */
 public class Vol implements Serializable {
 
-    private Long id;
+    private Integer id;
     private String depart;
     private String arrivee;
-    private Long idAvion;
-    private Long idPilote;
+    private Integer idAvion;
+    private Integer idPilote;
     private java.sql.Date jourDepart;
     private java.sql.Time heureDepart;
     private java.sql.Date jourArrivee;
@@ -29,8 +29,7 @@ public class Vol implements Serializable {
 
     }
 
-    public Vol(Long id, String depart, String arrivee, Long idAvion,
-            Long idPilote, Date jourDepart, Time heureDepart, Date jourArrivee, Time heureArrivee) {
+    public Vol(Integer id, String depart, String arrivee, Integer idAvion, Integer idPilote, Date jourDepart, Time heureDepart, Date jourArrivee, Time heureArrivee) {
         this.id = id;
         this.depart = depart;
         this.arrivee = arrivee;
@@ -42,19 +41,11 @@ public class Vol implements Serializable {
         this.heureArrivee = heureArrivee;
     }
 
-    public java.sql.Time getHeureArrivee() {
-        return heureArrivee;
-    }
-
-    public void setHeureArrivee(java.sql.Time heureArrivee) {
-        this.heureArrivee = heureArrivee;
-    }
-
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -74,44 +65,52 @@ public class Vol implements Serializable {
         this.arrivee = arrivee;
     }
 
-    public Long getIdAvion() {
+    public Integer getIdAvion() {
         return idAvion;
     }
 
-    public void setIdAvion(Long idAvion) {
+    public void setIdAvion(Integer idAvion) {
         this.idAvion = idAvion;
     }
 
-    public Long getIdPilote() {
+    public Integer getIdPilote() {
         return idPilote;
     }
 
-    public void setIdPilote(Long idPilote) {
+    public void setIdPilote(Integer idPilote) {
         this.idPilote = idPilote;
     }
 
-    public java.sql.Date getJourDepart() {
+    public Date getJourDepart() {
         return jourDepart;
     }
 
-    public void setJourDepart(java.sql.Date jourDepart) {
+    public void setJourDepart(Date jourDepart) {
         this.jourDepart = jourDepart;
     }
 
-    public java.sql.Time getHeureDepart() {
+    public Time getHeureDepart() {
         return heureDepart;
     }
 
-    public void setHeureDepart(java.sql.Time heureDepart) {
+    public void setHeureDepart(Time heureDepart) {
         this.heureDepart = heureDepart;
     }
 
-    public java.sql.Date getJourArrivee() {
+    public Date getJourArrivee() {
         return jourArrivee;
     }
 
-    public void setJourArrivee(java.sql.Date jourArrivee) {
+    public void setJourArrivee(Date jourArrivee) {
         this.jourArrivee = jourArrivee;
+    }
+
+    public Time getHeureArrivee() {
+        return heureArrivee;
+    }
+
+    public void setHeureArrivee(Time heureArrivee) {
+        this.heureArrivee = heureArrivee;
     }
 
     @Override
