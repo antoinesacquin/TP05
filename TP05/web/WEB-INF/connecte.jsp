@@ -16,7 +16,7 @@
         <h1>Bonjour <c:out value="${sessionScope.sessionUtilisateur.nom}"/></h1>
         
         <p>VOUS ÊTES MAINTENANT CONNECTE!!!<br/>
-        PASSEZ UNE  AGREABLE SESSION AVEC NOUS!</p>     
+        PASSEZ UNE AGREABLE SESSION AVEC NOUS!</p>     
             
     </body>
 </html>

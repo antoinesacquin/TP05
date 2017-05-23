@@ -5,6 +5,7 @@
  */
 package forms;
 
+import DAO.DAOFactory;
 import DAO.UtilisateurDAO;
 import beans.Utilisateur;
 import java.util.HashMap;
@@ -54,7 +55,7 @@ public class InscriptionForm {
         //instanciation d'un objet utilisateur
         Utilisateur utilisateur = new Utilisateur();
         //instanciation d'un objet DAO pour interroger la base de donnée
-        UtilisateurDAO utilisateurdao = new UtilisateurDAO();
+        UtilisateurDAO utilisateurdao = DAOFactory.getUtilisateurDAO();
 
         //tests de validation des champs et hydratation du bean avec paramètres de requête
         //pour afficher dans le formulaire malgré échec inscription
@@ -70,7 +71,8 @@ public class InscriptionForm {
         } catch (Exception e) {
             setErreur(CHAMP_PASS, e.getMessage());
         }
-        utilisateur.setPassword(motDePasse);
+        String encryptedPwd= EncryptionForm.getSecurePassword(motDePasse);
+        utilisateur.setPassword(encryptedPwd);
 
         try {
             validationNom(nom);
@@ -99,7 +101,7 @@ public class InscriptionForm {
      */
     private void validationEmail(String email) throws Exception {
 
-        UtilisateurDAO utilisateurDao = new UtilisateurDAO();
+        UtilisateurDAO utilisateurDao = DAOFactory.getUtilisateurDAO();
 
         if (email != null && email.length() != 0) {
             if (!email.matches("([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)")) {

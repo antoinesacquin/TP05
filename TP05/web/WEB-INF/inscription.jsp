@@ -6,6 +6,7 @@
         <link type="text/css" rel="stylesheet" href="<c:url value="/inc/form.css"/>" />
     </head>
     <body>
+
         <form method="post" action="inscription">
             <fieldset>
                 <legend>Inscription</legend>
@@ -31,6 +32,10 @@
                 <p class="${empty requestScope.form.erreurs ? 'succes' : 'erreur'}"><c:out value="${requestScope.form.resultat}"/></p>
             </fieldset>
         </fieldset>
+    </form>           
+            <form>
+                Si vous êtes déjà inscrit, merci de vous connecter:
+        <input type="submit" formaction="<c:out value="connexion"/>" value="CONNEXION"/>
     </form>
 </body>
 </html>

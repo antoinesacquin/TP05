@@ -5,44 +5,47 @@
  */
 package beans;
 
+import java.io.Serializable;
+import java.sql.Date;
+import java.sql.Time;
+
 /**
  *
  * @author stag
  */
-public class Vol {
+public class Vol implements Serializable {
 
-    private Long id;
+    private Integer id;
     private String depart;
     private String arrivee;
-    private Long id_avion;
-    private Long id_pilote;
-    private java.sql.Date jdep;
-    private java.sql.Time hdep;
-    private java.sql.Date jarr;
-    private java.sql.Time harr;
+    private Integer idAvion;
+    private Integer idPilote;
+    private java.sql.Date jourDepart;
+    private java.sql.Time heureDepart;
+    private java.sql.Date jourArrivee;
+    private java.sql.Time heureArrivee;
 
     public Vol() {
 
     }
 
-    public Vol(Long id, String depart, String arrivee, Long id_avion, Long id_pilote,
-            java.sql.Date jdep, java.sql.Time hdep, java.sql.Date jarr, java.sql.Time harr) {
+    public Vol(Integer id, String depart, String arrivee, Integer idAvion, Integer idPilote, Date jourDepart, Time heureDepart, Date jourArrivee, Time heureArrivee) {
         this.id = id;
         this.depart = depart;
         this.arrivee = arrivee;
-        this.id_avion = id_avion;
-        this.id_pilote = id_pilote;
-        this.jdep = jdep;
-        this.hdep = hdep;
-        this.jarr = jarr;
-        this.harr = harr;
+        this.idAvion = idAvion;
+        this.idPilote = idPilote;
+        this.jourDepart = jourDepart;
+        this.heureDepart = heureDepart;
+        this.jourArrivee = jourArrivee;
+        this.heureArrivee = heureArrivee;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -62,59 +65,60 @@ public class Vol {
         this.arrivee = arrivee;
     }
 
-    public Long getId_avion() {
-        return id_avion;
+    public Integer getIdAvion() {
+        return idAvion;
     }
 
-    public void setId_avion(Long id_avion) {
-        this.id_avion = id_avion;
+    public void setIdAvion(Integer idAvion) {
+        this.idAvion = idAvion;
     }
 
-    public Long getId_pilote() {
-        return id_pilote;
+    public Integer getIdPilote() {
+        return idPilote;
     }
 
-    public void setId_pilote(Long id_pilote) {
-        this.id_pilote = id_pilote;
+    public void setIdPilote(Integer idPilote) {
+        this.idPilote = idPilote;
     }
 
-    public java.sql.Date getJdep() {
-        return jdep;
+    public Date getJourDepart() {
+        return jourDepart;
     }
 
-    public void setJdep(java.sql.Date jdep) {
-        this.jdep = jdep;
+    public void setJourDepart(Date jourDepart) {
+        this.jourDepart = jourDepart;
     }
 
-    public java.sql.Time getHdep() {
-        return hdep;
+    public Time getHeureDepart() {
+        return heureDepart;
     }
 
-    public void setHdep(java.sql.Time hdep) {
-        this.hdep = hdep;
+    public void setHeureDepart(Time heureDepart) {
+        this.heureDepart = heureDepart;
     }
 
-    public java.sql.Date getJarr() {
-        return jarr;
+    public Date getJourArrivee() {
+        return jourArrivee;
     }
 
-    public void setJarr(java.sql.Date jarr) {
-        this.jarr = jarr;
+    public void setJourArrivee(Date jourArrivee) {
+        this.jourArrivee = jourArrivee;
     }
 
-    public java.sql.Time getHarr() {
-        return harr;
+    public Time getHeureArrivee() {
+        return heureArrivee;
     }
 
-    public void setHarr(java.sql.Time harr) {
-        this.harr = harr;
+    public void setHeureArrivee(Time heureArrivee) {
+        this.heureArrivee = heureArrivee;
     }
 
     @Override
     public String toString() {
-        return "Vol{" + "id=" + id + ", depart=" + depart + ", arrivee=" + arrivee
-                + ", id_avion=" + id_avion + ", id_pilote=" + id_pilote + ", jdep=" + jdep
-                + ", hdep=" + hdep + ", jarr=" + jarr + ", harr=" + harr + '}';
+        return "Vol{" + "id=" + id + ", départ=" + depart + ", arrivée=" + arrivee
+                + ", n°Avion=" + idAvion + ", n°Pilote=" + idPilote
+                + ", Jour de départ=" + jourDepart + ", Heure de départ=" + heureDepart
+                + ", Jour d'arrivée=" + jourArrivee + ", heure d'arrivée=" + heureArrivee + '}';
     }
 
 }

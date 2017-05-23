@@ -14,11 +14,9 @@
     </head>
     <body>
         <h1>Bienvenue sur notre site!</h1>
-        <p>Si vous n'avez pas encore de compte utilisateur,
-            veuillez vous inscrire</p>
+        <p>Si vous n'avez pas encore de compte utilisateur, veuillez vous inscrire</p>
         <form> 
             <p><input type="submit" formaction="<c:out value="inscription"/>" value="INSCRIPTION"/></p>
-
             <p>Sinon, veuillez vous connecter</p>
             <p><input type="submit" formaction="<c:out value="connexion"/>" value="CONNEXION"/></p>
         </form>

@@ -5,8 +5,11 @@
  */
 package forms;
 
+import DAO.DAOFactory;
+import DAO.VolDAO;
 import beans.Vol;
 import static java.lang.reflect.Array.set;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -20,10 +23,16 @@ public class VolForm {
 
     /* Récupération de la liste des villes de départ de la BD */
     public Set<String> villesDepart() {
-
+        VolDAO volDAO = DAOFactory.getVolDAO();
+        Set<String> villesDep = new HashSet();
+        villesDep = volDAO.findAllDeparts();
+        return villesDep;
     }
 
     public Set<Vol> vols(String depart) {
-
+        VolDAO volDAO = DAOFactory.getVolDAO();
+        Set<Vol> volsDepChoisi = new HashSet();
+        volsDepChoisi = volDAO.findAll(depart);
+        return volsDepChoisi;
     }
 }

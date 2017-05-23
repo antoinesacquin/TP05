@@ -12,7 +12,7 @@
         <title>Connexion</title>
         <link type="text/css" rel="stylesheet" href="inc/form.css" />
     </head>
-    <body>
+    <body>       
         <form method="post" action="<c:out value="connexion"/>">
             <fieldset>
                 <legend>Connexion</legend>
@@ -33,6 +33,9 @@
                     <p class="succes">Vous êtes connecté(e) avec l'adresse : <c:out value="${sessionScope.sessionUtilisateur.email}"/></p>
                 </c:if>
             </fieldset>
+        </form>
+        <form>  Si vous n'êtes pas inscrit, merci de vous inscrire:
+            <input type="submit" formaction="<c:out value="inscription"/>" value="INSCRIPTION"/>
         </form>
     </body>
 </html>

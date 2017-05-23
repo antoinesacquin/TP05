@@ -5,6 +5,7 @@
  */
 package forms;
 
+import DAO.DAOFactory;
 import DAO.UtilisateurDAO;
 import beans.Utilisateur;
 import java.util.HashMap;
@@ -38,7 +39,7 @@ public final class ConnexionForm {
         
         
         Utilisateur utilisateur = new Utilisateur();
-        UtilisateurDAO utilisateurDao = new UtilisateurDAO();
+        UtilisateurDAO utilisateurDao = DAOFactory.getUtilisateurDAO();
         
         
         /* Validation du champ email. */
@@ -75,7 +76,7 @@ public final class ConnexionForm {
      */
     private void validationEmail(String email) throws Exception {
 
-        UtilisateurDAO utilisateurDao = new UtilisateurDAO();
+        UtilisateurDAO utilisateurDao = DAOFactory.getUtilisateurDAO();
 
         if (email == null) {
             throw new Exception("Merci de saisir une adresse mail.");
@@ -93,13 +94,15 @@ public final class ConnexionForm {
      */
     private void validationMotDePasse(String email, String motDePasse) throws Exception {
 
-        UtilisateurDAO utilisateurDao = new UtilisateurDAO();
+        UtilisateurDAO utilisateurDao = DAOFactory.getUtilisateurDAO();
 
         String tablePwd = utilisateurDao.find(email).getPassword();
+        
+        String MotDePasseCrypte=EncryptionForm.getSecurePassword(motDePasse);
 
         if (motDePasse == null) {
             throw new Exception("Merci de saisir votre mot de passe.");
-        } else if (!tablePwd.equals(motDePasse)) {
+        } else if (!tablePwd.equals(MotDePasseCrypte)) {
             throw new Exception("Mot de Passe invalide");
         }
     }
