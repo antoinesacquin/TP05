@@ -26,10 +26,24 @@
             </select>
             <input type="submit" formaction="<c:url value="connecte"/>" value="Valider"/>
         </form>
-        
-        
-        <c:forEach items="${requestScope.vols}" var="vol">
-            <c:out value="${vol.id} ${vol.arrivee} ${vol.jourDepart} ${vol.heureDepart} ${vol.jourArrivee} ${vol.heureArrivee}"/> <br/>
-        </c:forEach>
+        <c:if test="${!empty param.depart}"> <table>
+                <tr>
+                    <th>Arrivée</th>
+                    <th>Jour de départ</th>
+                    <th>Heure de départ</th>
+                    <th>Jour d'arrivée</th>
+                    <th>Heure d'arrivée</th>
+                </tr>
+
+                <c:forEach items="${requestScope.vols}" var="vol">
+                    <tr>  
+                        <th><c:out value="${vol.arrivee}"/></th>
+                        <th><c:out value="${vol.jourDepart}"/></th>
+                        <th><c:out value="${vol.heureDepart}"/></th>
+                        <th><c:out value="${vol.jourArrivee}"/></th>
+                        <th><c:out value="${vol.heureArrivee}"/></th>
+                    </tr> 
+                </c:forEach>
+            </table></c:if>
     </body>
 </html>
