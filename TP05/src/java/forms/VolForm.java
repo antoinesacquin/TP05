@@ -11,6 +11,7 @@ import beans.Vol;
 import static java.lang.reflect.Array.set;
 import java.util.HashSet;
 import java.util.Set;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  *
@@ -23,16 +24,22 @@ public class VolForm {
 
     /* Récupération de la liste des villes de départ de la BD */
     public Set<String> villesDepart() {
+        
         VolDAO volDAO = DAOFactory.getVolDAO();
-        Set<String> villesDep = new HashSet();
-        villesDep = volDAO.findAllDeparts();
+        Set<String> villesDep = new HashSet<>();
+        villesDep = volDAO.findAllVillesDeparts();
         return villesDep;
     }
 
-    public Set<Vol> vols(String depart) {
+    public Set<Vol> vols(HttpServletRequest request) {
+        
         VolDAO volDAO = DAOFactory.getVolDAO();
-        Set<Vol> volsDepChoisi = new HashSet();
-        volsDepChoisi = volDAO.findAll(depart);
+        Set<Vol> volsDepChoisi = new HashSet<>();
+        
+        String depart=(String)request.getParameter(CHAMP_DEPART);
+        
+        volsDepChoisi = volDAO.findAllFromDepart(depart);
+        
         return volsDepChoisi;
     }
 }
