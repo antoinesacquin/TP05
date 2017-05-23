@@ -5,8 +5,10 @@
  */
 package servlets;
 
+import beans.Vol;
+import forms.VolForm;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,6 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 public class Connecte extends HttpServlet {
 
     private static final String VUE="/WEB-INF/connecte.jsp";
+    private static final String ATT_VILLES="villesDepart";
+    private static final String ATT_VOLS="vols";
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -33,6 +37,13 @@ public class Connecte extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        VolForm form=new VolForm();
+        
+        Set<String> villesDepart=form.villesDepart();
+        
+        request.setAttribute(ATT_VILLES, villesDepart);
+        
         this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
     }
 
@@ -47,6 +58,17 @@ public class Connecte extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        
+        VolForm form=new VolForm();
+        
+        Set<String> villesDepart=form.villesDepart();
+        
+        
+        
+        Set<Vol> vols=form.vols(request);
+        request.setAttribute(ATT_VOLS, vols);
+        request.setAttribute(ATT_VILLES, villesDepart);
+        
         this.getServletContext().getRequestDispatcher(VUE).forward(request, response);
     }
 

@@ -132,14 +132,15 @@ public class VolDAO extends DAO<Vol> {
 
     }
 
-/**Retourne toutes les villes de départ de la table
- * 
- * @return 
- */
-    public Set<String> findAllDeparts() {
+    /**
+     * Retourne toutes les villes de départ de la table
+     *
+     * @return
+     */
+    public Set<String> findAllVillesDeparts() {
         Set<String> tabId = new HashSet<>();
         try {
-            String req = "SELECT depart FROM " + TABLE;
+            String req = "SELECT DISTINCT depart FROM " + TABLE;
 
             Statement stmt = this.connection.createStatement();
             ResultSet result = stmt.executeQuery(req);
@@ -152,17 +153,23 @@ public class VolDAO extends DAO<Vol> {
         }
         return tabId;
     }
-    public Set<Vol> findAll(String depart) {
+
+    public Set<Vol> findAllFromDepart(String depart) {
         Set<Vol> tabId = new HashSet<>();
         try {
-            String req = "SELECT * FROM " + TABLE+" WHERE depart = ?";
-
-            PreparedStatement pstmt = this.connection.prepareStatement(req);
-            pstmt.setString(1, depart);
+            String req = "SELECT * FROM " + TABLE + " WHERE depart= '"+depart+"'";
+            Statement stmt = this.connection.createStatement();
             
-            ResultSet result = pstmt.executeQuery(req);
+            ResultSet result = stmt.executeQuery(req);
+
+//            PreparedStatement pstmt = this.connection.prepareStatement(req);
+//            pstmt.setString(1, depart);
+           System.out.println("requete : " + stmt.toString());
+//
+//            ResultSet result = pstmt.executeQuery(req);
             while (result.next()) {
-               Vol vol = new Vol(
+                System.out.println("coucou");
+                Vol vol = new Vol(
                         result.getInt("id"),
                         result.getString("depart"),
                         result.getString("arrivee"),
@@ -179,6 +186,7 @@ public class VolDAO extends DAO<Vol> {
         } catch (SQLException e) {
             Logger.getLogger(VolDAO.class.getName()).log(Level.SEVERE, null, e);
         }
+        System.out.println("TAILLE RETOURNEE: " + tabId.size());
         return tabId;
     }
 }
