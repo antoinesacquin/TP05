@@ -21,9 +21,19 @@ import java.util.logging.Logger;
  */
 public class UtilisateurDAO {
 
+    //Nom de la table d'intéret
     private static final String TABLE = "inscrits";
+
+    //crétaion connection à la base de donnée
     protected Connection connection = Singleton.getInstance();
 
+    /**
+     * Méthode permettant d'obtenir un objet utilisateur dans la base de donnée
+     * à partir de son identifiant
+     *
+     * @param id numero d'identifiant de l'utilisateur
+     * @return utilisateur recherché
+     */
     public Utilisateur find(Integer id) {
         Utilisateur user = null;
         try {
@@ -48,7 +58,14 @@ public class UtilisateurDAO {
         return user;
 
     }
-    
+
+    /**
+     * Méthode permettant d'obtenir un objet utilisateur dans la base de donnée
+     * à partir de son email
+     *
+     * @param email email de l'utilisateur
+     * @return utilisateur recherché
+     */
     public Utilisateur find(String email) {
         Utilisateur user = null;
         try {
@@ -74,6 +91,13 @@ public class UtilisateurDAO {
 
     }
 
+    /**
+     * Ajout d'un nouvel utilisateur dans la base de donnée et retour de l'objet
+     * créé avec son identifiant généré
+     *
+     * @param obj Utilisateur à ajouter à la base de donnée
+     * @return Utilisateur crée avec son numéro d'identifiant
+     */
     public Utilisateur create(Utilisateur obj) {
         try {
             String req = "INSERT INTO " + TABLE + " (email, password, nom) VALUES(?,?,?)";
@@ -101,6 +125,12 @@ public class UtilisateurDAO {
         return obj;
     }
 
+    /**
+     * Mise à jour de l'utilisateur
+     *
+     * @param obj utilisateur à mettre à jour
+     * @return utilisateur mis à jour
+     */
     public Utilisateur update(Utilisateur obj) {
         try {
             String req = "UPDATE " + TABLE + " SET email = ?, password =?, nom = ?  WHERE id=?";
@@ -121,6 +151,11 @@ public class UtilisateurDAO {
         return obj;
     }
 
+    /**
+     * Efface un utlisateur de la base de donnée
+     *
+     * @param obj utilisateur à éliminer
+     */
     public void delete(Utilisateur obj) {
         try {
             String req = "DELETE FROM " + TABLE + " WHERE id=?";
@@ -137,8 +172,14 @@ public class UtilisateurDAO {
         }
     }
 
+    /**
+     * Vérifie que l'utilisateur existe dans la base de donnée
+     *
+     * @param user utilisateur dont on vérifie l'existence
+     * @return true si existe, false si n'existe pas
+     */
     public boolean exist(Utilisateur user) {
-        
+
         boolean res = false;
         try {
             String req = "SELECT * FROM " + TABLE + " WHERE email=?";

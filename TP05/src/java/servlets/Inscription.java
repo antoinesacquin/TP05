@@ -47,11 +47,14 @@ public class Inscription extends HttpServlet {
 
         HttpSession session = request.getSession();
 
-        /**
-         * Si aucune erreur de validation n'a eu lieu, alors ajout du bean
-         * Utilisateur à la session, sinon suppression du bean de la session.
+        /*
+         * Si aucune erreur de validation n'a eu lieu, alors l'utilisateur est 
+        *connecté, le bean Utilisateur issu de la base de donnée est ajouté à la session 
+        *et l'utilisateur est transféré vers une page spécifique
+        *
+        *sinon suppression du bean de la session.
          */
-        if (form.getErreurs().isEmpty() && !(form.getUserExists())) {
+        if (form.getErreurs().isEmpty()) {
             session.setAttribute(ATT_SESSION_USER, utilisateur);
             this.getServletContext()
                 .getRequestDispatcher(VUE_CONNECTE).

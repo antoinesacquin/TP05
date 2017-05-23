@@ -21,7 +21,6 @@ public final class ConnexionForm {
     private static final String CHAMP_PASS = "motdepasse";
     private String resultat;
     private Map<String, String> erreurs = new HashMap<>();
-    private Boolean validiteConnection=false;
 
     public String getResultat() {
         return resultat;
@@ -31,16 +30,17 @@ public final class ConnexionForm {
         return erreurs;
     }
 
-    public Boolean getValiditeConnection() {
-        return validiteConnection;
-    }
-
     public Utilisateur connecterUtilisateur(HttpServletRequest request) {
+        
         /* Récupération des champs du formulaire */
         String email = getValeurChamp(request, CHAMP_EMAIL);
         String motDePasse = getValeurChamp(request, CHAMP_PASS);
+        
+        
         Utilisateur utilisateur = new Utilisateur();
-        UtilisateurDAO utilisateurDao= new UtilisateurDAO();
+        UtilisateurDAO utilisateurDao = new UtilisateurDAO();
+        
+        
         /* Validation du champ email. */
         try {
             validationEmail(email);
@@ -48,18 +48,18 @@ public final class ConnexionForm {
             setErreur(CHAMP_EMAIL, e.getMessage());
         }
         utilisateur.setEmail(email);
-       
+
         /* Validation du champ mot de passe. */
         try {
-           validiteConnection=validationMotDePasse(email,motDePasse);
+            validationMotDePasse(email, motDePasse);
 
         } catch (Exception e) {
             setErreur(CHAMP_PASS, e.getMessage());
         }
-        
+
         /* Initialisation du résultat global de la validation. */
-        if (erreurs.isEmpty() && validiteConnection) {
-            utilisateur=utilisateurDao.find(email);
+        if (erreurs.isEmpty()) {
+            utilisateur = utilisateurDao.find(email);
             resultat = "Succès de la connexion.";
         } else {
             resultat = "Échec de la connexion.";
@@ -68,49 +68,59 @@ public final class ConnexionForm {
     }
 
     /**
-     * Valide l'adresse email saisie.
+     * Valide si l'Email existe déjà dans la base de donnée
+     *
+     * @param email email à vérifier
+     * @throws Exception
      */
     private void validationEmail(String email) throws Exception {
-        
-        UtilisateurDAO utilisateurDao= new UtilisateurDAO();
-        
+
+        UtilisateurDAO utilisateurDao = new UtilisateurDAO();
+
         if (email == null) {
             throw new Exception("Merci de saisir une adresse mail.");
-        } else if (utilisateurDao.find(email)==null) {
+        } else if (utilisateurDao.find(email) == null) {
             throw new Exception("E-Mail inconnu");
         }
     }
 
-    /**
-     * Valide le mot de passe saisi.
+    /**Vérifie le couple email/motDePasse avec le couple email/password 
+     * correpondant dans la base de donnée
+     * 
+     * @param email
+     * @param motDePasse
+     * @throws Exception 
      */
-    private Boolean validationMotDePasse(String email, String motDePasse) throws Exception {
-        
-        UtilisateurDAO utilisateurDao= new UtilisateurDAO();
-        
-        Boolean isValid=false;
-        String tablePwd= utilisateurDao.find(email).getPassword();
-        
+    private void validationMotDePasse(String email, String motDePasse) throws Exception {
+
+        UtilisateurDAO utilisateurDao = new UtilisateurDAO();
+
+        String tablePwd = utilisateurDao.find(email).getPassword();
+
         if (motDePasse == null) {
             throw new Exception("Merci de saisir votre mot de passe.");
-        } else if(tablePwd.equals(motDePasse)) {
-            isValid=true;
-        }else{
+        } else if (!tablePwd.equals(motDePasse)) {
             throw new Exception("Mot de Passe invalide");
         }
-        return isValid;
     }
 
-    /*
-    * Ajoute un message correspondant au champ spécifié à la map des erreurs.
+    /**
+     * Ajoute un message correspondant au champ spécifié à la map des erreurs.
+     *
+     * @param champ
+     * @param message
      */
     private void setErreur(String champ, String message) {
         erreurs.put(champ, message);
     }
 
-    /*
-* Méthode utilitaire qui retourne null si un champ est vide, et son contenu
-* sinon.
+    /**
+     * Méthode utilitaire qui retourne null si un champ est vide, et son contenu
+     * débarassé des espaces devant et derrière
+     *
+     * @param request
+     * @param nomChamp
+     * @return
      */
     private static String getValeurChamp(HttpServletRequest request, String nomChamp) {
         String valeur = request.getParameter(nomChamp);
