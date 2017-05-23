@@ -31,6 +31,8 @@ public class Connexion extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
+
+        
         HttpSession session = request.getSession();
         
         if (null !=session.getAttribute(ATT_SESSION_USER)) {
