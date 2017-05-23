@@ -24,7 +24,7 @@ public class UtilisateurDAO {
     //Nom de la table d'intéret
     private static final String TABLE = "inscrits";
 
-    //crétaion connection à la base de donnée
+    //création connection à la base de donnée
     protected Connection connection = Singleton.getInstance();
 
     /**
