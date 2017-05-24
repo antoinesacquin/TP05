@@ -13,7 +13,9 @@
         <title>LDNR voyage</title>
     </head>
     <body class="homepage">
-        
+        <c:if test="${!empty sessionScope.sessionUtilisateur}">
+            <c:redirect url="pagePrincipale"/>
+        </c:if>
         <div class="title">LDNR Voyage</div>
         <h2>Bienvenue sur notre site!</h2>
         <p>Si vous n'avez pas encore de compte utilisateur, veuillez vous inscrire</p>
